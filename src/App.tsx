@@ -5,7 +5,7 @@ function App() {
   useEffect(() => {
     (async () => {
       try {
-        const response = await fetch('http://localhost:5000/', {
+        const response = await fetch('http://localhost:5000/data', {
           method: 'GET',
         });
         if (!response.ok) {
