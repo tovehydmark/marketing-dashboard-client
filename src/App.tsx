@@ -1,39 +1,38 @@
-import { useEffect } from 'react';
 import './App.css';
+import apiRequestHandler from '../src/lib/apiRequestHandler';
 
 function App() {
-  useEffect(() => {
-    (async () => {
-      try {
-        const graphqlQuery = `{
+  const getChannels = async () => {
+    const graphqlQuery = `{
           channel
         }`;
 
-        const response = await fetch('http://localhost:5000/graphql', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ query: graphqlQuery }),
-        });
+    const data = await apiRequestHandler(graphqlQuery);
+    console.log('data', data);
+  };
+  const getChannegroups = async () => {
+    const graphqlQuery = `{
+      channelGroup
+        }`;
 
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
+    const data = await apiRequestHandler(graphqlQuery);
+    console.log('data', data);
+  };
+  const getCampaigns = async () => {
+    const graphqlQuery = `{
+          campaign
+        }`;
 
-        const data = await response.json();
-        console.log('data', data);
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    })();
-  }, []);
+    const data = await apiRequestHandler(graphqlQuery);
+    console.log('data', data);
+  };
 
   return (
     <div className="App">
-      <h1>Hello world</h1>
+      <button onClick={getChannels}>Get channels</button>
+      <button onClick={getChannegroups}>Get channel groups</button>
+      <button onClick={getCampaigns}>Get campaigns</button>
     </div>
   );
 }
-
 export default App;
