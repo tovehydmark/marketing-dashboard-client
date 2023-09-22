@@ -5,14 +5,23 @@ function App() {
   useEffect(() => {
     (async () => {
       try {
-        const response = await fetch('http://localhost:5000/data', {
-          method: 'GET',
+        const graphqlQuery = `{
+          channel
+        }`;
+
+        const response = await fetch('http://localhost:5000/graphql', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ query: graphqlQuery }),
         });
+
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        const data = await response.json();
 
+        const data = await response.json();
         console.log('data', data);
       } catch (error) {
         console.error('Error:', error);
