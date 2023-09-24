@@ -11,13 +11,19 @@ function App() {
 
   return (
     <div className="App">
-      <button onClick={() => setGetChannels(true)}>Get channels</button>
-      <button onClick={() => setGetChannelsGroup(true)}>Get channel groups</button>
-      <button onClick={() => setGetCampaigns(true)}>Get campaigns</button>
+      <h1>Data dashboard </h1>
+      <p>On this page, you can view your marketing statistics based on channels, channel groups and campaigns.</p>
+      <section className="btn-layout">
+        <button onClick={() => setGetChannels(true)}>Get channels</button>
+        <button onClick={() => setGetChannelsGroup(true)}>Get channel groups</button>
+        <button onClick={() => setGetCampaigns(true)}>Get campaigns</button>
+      </section>
 
-      {getChannels ? <Channels></Channels> : null}
-      {getChannelGroups ? <ChannelGroups></ChannelGroups> : null}
-      {getCampaigns ? <Campaigns></Campaigns> : null}
+      <section className="tableSection">
+        {getChannels ? <Channels></Channels> : null}
+        {getChannelGroups ? <ChannelGroups></ChannelGroups> : null}
+        {getCampaigns ? <Campaigns></Campaigns> : null}
+      </section>
     </div>
   );
 }
