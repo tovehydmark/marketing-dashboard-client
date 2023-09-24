@@ -14,9 +14,13 @@ function App() {
       <h1>Data dashboard </h1>
       <p>On this page, you can view your marketing statistics based on channels, channel groups and campaigns.</p>
       <section className="btn-layout">
-        <button onClick={() => setGetChannels(true)}>Get channels</button>
-        <button onClick={() => setGetChannelsGroup(true)}>Get channel groups</button>
-        <button onClick={() => setGetCampaigns(true)}>Get campaigns</button>
+        <button onClick={() => setGetChannels(!getChannels)}> {getChannels ? 'Close channels' : 'Get channels'}</button>
+        <button onClick={() => setGetChannelsGroup(!getChannelGroups)}>
+          {getChannelGroups ? 'Close channel groups' : 'Get channel groups'}
+        </button>
+        <button onClick={() => setGetCampaigns(!getCampaigns)}>
+          {getCampaigns ? 'Close campaigns' : 'Get campaigns'}
+        </button>
       </section>
 
       <section className="tableSection">
