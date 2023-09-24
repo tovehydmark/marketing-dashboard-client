@@ -1,76 +1,23 @@
 import './App.css';
-import apiRequestHandler from '../src/lib/apiRequestHandler';
 import { useState } from 'react';
+import ChannelGroups from './components/ChannelGroups';
+import Channels from './components/Channels';
+import Campaigns from './components/Campaigns';
 
 function App() {
-  const [channelData, setChannelData] = useState();
-
-  const displayChannelsData = async () => {
-    const graphqlQuery = `{
-          channel
-        }`;
-
-    const retrieveChannels = await apiRequestHandler(graphqlQuery);
-
-    //Returns unique values from given array
-    function getUniqueValues(value: string, index: number, array: string[]) {
-      return array.indexOf(value) === index;
-    }
-
-    //Returns all possible values within the channels array
-    const possibleValues = retrieveChannels.channel.filter(getUniqueValues);
-
-    //Map through the possible values and count how many times they occur within the original array
-    const printChannelsData = possibleValues.map((currentChannel: string, i: number) => {
-      let counter = 0;
-      for (const channelToFilterOf of retrieveChannels.channel) {
-        if (channelToFilterOf === currentChannel) {
-          counter++;
-        }
-      }
-
-      return (
-        <tr key={i}>
-          <td>{currentChannel}</td>
-          <td>{counter}</td>
-        </tr>
-      );
-    });
-
-    setChannelData(printChannelsData);
-  };
-  const getChannegroups = async () => {
-    const graphqlQuery = `{
-      channelGroup
-        }`;
-
-    const data = await apiRequestHandler(graphqlQuery);
-    console.log('data', data);
-  };
-  const getCampaigns = async () => {
-    const graphqlQuery = `{
-          campaign
-        }`;
-
-    const data = await apiRequestHandler(graphqlQuery);
-    console.log('data', data);
-  };
+  const [getChannelGroups, setGetChannelsGroup] = useState<boolean>(false);
+  const [getChannels, setGetChannels] = useState<boolean>(false);
+  const [getCampaigns, setGetCampaigns] = useState<boolean>(false);
 
   return (
     <div className="App">
-      <button onClick={displayChannelsData}>Get channels</button>
-      <button onClick={getChannegroups}>Get channel groups</button>
-      <button onClick={getCampaigns}>Get campaigns</button>
+      <button onClick={() => setGetChannels(true)}>Get channels</button>
+      <button onClick={() => setGetChannelsGroup(true)}>Get channel groups</button>
+      <button onClick={() => setGetCampaigns(true)}>Get campaigns</button>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Channel</th>
-            <th>Number of orders</th>
-          </tr>
-        </thead>
-        <tbody>{channelData}</tbody>
-      </table>
+      {getChannels ? <Channels></Channels> : null}
+      {getChannelGroups ? <ChannelGroups></ChannelGroups> : null}
+      {getCampaigns ? <Campaigns></Campaigns> : null}
     </div>
   );
 }
